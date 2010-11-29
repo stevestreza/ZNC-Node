@@ -1,0 +1,4 @@
+nickserv.so: nickserv.cpp ../User.h ../Buffer.h ../ZNCString.h \
+  ../FileUtils.h ../Socket.h ../Csocket.h ../defines.h ../main.h \
+  ../Utils.h ../Modules.h ../WebModules.h ../Client.h ../Template.h \
+  ../HTTPSock.h ../Nick.h

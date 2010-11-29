@@ -1,0 +1,4 @@
+awaynick.so: awaynick.cpp ../IRCSock.h ../Socket.h ../Csocket.h \
+  ../defines.h ../main.h ../Utils.h ../ZNCString.h ../Nick.h ../User.h \
+  ../Buffer.h ../FileUtils.h ../Modules.h ../WebModules.h ../Client.h \
+  ../Template.h ../HTTPSock.h

@@ -1,0 +1,3 @@
+DCCBounce.o: DCCBounce.cpp DCCBounce.h Socket.h Csocket.h defines.h \
+  main.h Utils.h ZNCString.h User.h Buffer.h FileUtils.h Modules.h \
+  WebModules.h Client.h Template.h HTTPSock.h Nick.h znc.h

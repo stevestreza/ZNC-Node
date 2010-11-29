@@ -1,0 +1,1 @@
+SHA256.o: SHA256.cpp SHA256.h

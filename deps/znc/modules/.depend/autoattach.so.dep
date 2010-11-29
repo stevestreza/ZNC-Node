@@ -1,0 +1,3 @@
+autoattach.so: autoattach.cpp ../Chan.h ../FileUtils.h ../Socket.h \
+  ../Csocket.h ../defines.h ../main.h ../Utils.h ../ZNCString.h ../Nick.h \
+  ../Modules.h ../WebModules.h ../Client.h ../Template.h ../HTTPSock.h

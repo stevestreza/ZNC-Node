@@ -1,0 +1,5 @@
+webadmin.so: webadmin.cpp ../Chan.h ../FileUtils.h ../Socket.h \
+  ../Csocket.h ../defines.h ../main.h ../Utils.h ../ZNCString.h ../Nick.h \
+  ../HTTPSock.h ../Server.h ../Template.h ../User.h ../Buffer.h \
+  ../Modules.h ../WebModules.h ../Client.h ../Template.h ../HTTPSock.h \
+  ../znc.h ../WebModules.h ../ZNCString.h ../Listener.h ../znc.h

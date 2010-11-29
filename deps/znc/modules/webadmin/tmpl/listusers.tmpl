@@ -1,0 +1,40 @@
+<? INC Header.tmpl ?>
+
+		<?IF !UserLoop?>
+			<div class="textsection">
+				There are no users defined. Click <a href="adduser">here</a> if you would like to add one.
+			</div>
+		<?ELSE?>
+			<div class="toptable">
+				<table>
+					<thead>
+					<tr>
+						<td>Action</td>
+						<td>Username</td>
+						<td>Clients</td>
+						<td>Current Server</td>
+						<td>IRC Nick</td>
+					</tr>
+					</thead>
+
+					<tbody>
+			<?LOOP UserLoop SORTASC=Username ?>
+					<tr class="<?IF __EVEN__?>evenrow<?ELSE?>oddrow<?ENDIF?>">
+						<td>
+							<span class="nowrap">
+								[<a href="edituser?user=<?VAR Username ESC=URL?>">Edit</a>]
+								<? IF !IsSelf ?>[<a href="deluser?user=<?VAR Username ESC=URL?>">Delete</a>]<? ENDIF ?>
+							</span>
+						</td>
+						<td><? VAR Username ?></td>
+						<td><? VAR Clients ?></td>
+						<td><? VAR Server DEFAULT="-N/A-" ?></td>
+						<td><? VAR IRCNick ?></td>
+					</tr>
+			<?ENDLOOP?>
+					</tbody>
+				</table>
+			</div>
+		<?ENDIF?>
+
+<? INC Footer.tmpl ?>

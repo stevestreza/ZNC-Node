@@ -1,0 +1,1 @@
+Csocket.o: Csocket.cpp Csocket.h defines.h main.h Utils.h ZNCString.h

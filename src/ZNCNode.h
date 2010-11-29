@@ -15,11 +15,17 @@
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 
-class ZNCNode : public CModule
+class ZNCNode : public CGlobalModule
 {
-	public:
-		void HelloWorld(const char *);
+public:
+	GLOBALMODCONSTRUCTOR(ZNCNode) {
+//		openlog("znc", LOG_PID, LOG_DAEMON);
+	}
+	
+	void HelloWorld(const char *);
 };
+
+GLOBALMODULEDEFS(ZNCNode, "Run node.js scripts within ZNC")
 
 #pragma GCC visibility pop
 #endif

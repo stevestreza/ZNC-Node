@@ -14,6 +14,7 @@
 
 void ZNCNode::HelloWorld(const char * s)
 {
+	
 	node::Start(0, 0);
 	
 	ZNCNodePriv *theObj = new ZNCNodePriv;

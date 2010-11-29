@@ -1,0 +1,4 @@
+autoreply.so: autoreply.cpp ../Modules.h ../WebModules.h ../Client.h \
+  ../Socket.h ../Csocket.h ../defines.h ../main.h ../Utils.h \
+  ../ZNCString.h ../Template.h ../HTTPSock.h ../FileUtils.h ../IRCSock.h \
+  ../Nick.h ../User.h ../Buffer.h ../Modules.h

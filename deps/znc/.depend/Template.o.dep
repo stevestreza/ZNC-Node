@@ -1,0 +1,2 @@
+Template.o: Template.cpp Template.h Utils.h ZNCString.h FileUtils.h \
+  Socket.h Csocket.h defines.h main.h

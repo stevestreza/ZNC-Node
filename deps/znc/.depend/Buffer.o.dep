@@ -1,0 +1,1 @@
+Buffer.o: Buffer.cpp Buffer.h ZNCString.h

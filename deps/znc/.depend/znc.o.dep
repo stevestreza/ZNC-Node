@@ -1,0 +1,3 @@
+znc.o: znc.cpp znc.h Client.h Socket.h Csocket.h defines.h main.h Utils.h \
+  ZNCString.h FileUtils.h Modules.h WebModules.h Template.h HTTPSock.h \
+  Chan.h Nick.h IRCSock.h Server.h User.h Buffer.h Listener.h

@@ -1,0 +1,67 @@
+#!/bin/sh
+
+prefix="/usr/local"
+exec_prefix="${prefix}"
+datarootdir="${prefix}/share"
+bindir="${exec_prefix}/bin"
+datadir="${datarootdir}"
+
+CXX="g++"
+CXXFLAGS="   -D_FORTIFY_SOURCE=2 -O2 -DHAVE_IPV6 -Wall -W -Wno-unused-parameter -Woverloaded-virtual -Wshadow -DCSOCK_USE_POLL -DHAVE_LSTAT -I/Users/syco/Programs/include   -DHAVE_LIBSSL -fPIC -I/usr/local/include/znc"
+MODLINK="-bundle -flat_namespace -undefined suppress"
+# LIBS="-ldl  -L/Users/syco/Programs/lib -lssl -lcrypto -lz  "
+# No libs needed, ZNC links against $LIBS and thus modules don't need to.
+LIBS=""
+MODDIR="${exec_prefix}/lib/znc"
+DATADIR="${datarootdir}/znc"
+VERSION="0.096"
+
+# Ugly cygwin stuff :(
+LIBZNC=""
+LIBZNCDIR=""
+if test "x" = "x$LIBZNC"; then
+	LIBZNCFLAGS=""
+else
+	LIBZNCFLAGS="-L\"$LIBZNCDIR\" -lznc"
+fi
+
+if test -z "$1"; then
+	echo "USAGE: $0 <flag>"
+	echo "	--cxx        [$CXX]"
+	echo "	--cflags     [$CXXFLAGS]"
+	echo "	--modlink    [$MODLINK]"
+	echo "	--libs       [$LIBS]"
+	echo "	--moddir     [$MODDIR]"
+	echo "	--datadir    [$DATADIR]"
+	echo "	--version    [$VERSION]"
+	echo "	--prefix     [$prefix]"
+	echo "	--libznc     [$LIBZNCFLAGS]"
+	exit 1
+fi
+
+case $1 in
+	--cxx)
+		echo $CXX;;
+	--cflags)
+		echo $CXXFLAGS;;
+	--modlink)
+		echo $MODLINK;;
+	--include)
+		# Left here for backwards compatibility
+		;;
+	--libs)
+		echo $LIBS;;
+	--moddir)
+		echo $MODDIR;;
+	--datadir)
+		echo $DATADIR;;
+	--version)
+		echo $VERSION;;
+	--prefix)
+		echo $prefix;;
+	--libznc)
+		echo $LIBZNCFLAGS;;
+esac
+
+exit 0
+

@@ -1,0 +1,3 @@
+IRCSock.o: IRCSock.cpp IRCSock.h Socket.h Csocket.h defines.h main.h \
+  Utils.h ZNCString.h Nick.h Chan.h FileUtils.h Client.h DCCBounce.h \
+  User.h Buffer.h Modules.h WebModules.h Template.h HTTPSock.h znc.h

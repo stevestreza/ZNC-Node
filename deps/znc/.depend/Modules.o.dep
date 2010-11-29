@@ -1,0 +1,3 @@
+Modules.o: Modules.cpp Modules.h WebModules.h Client.h Socket.h Csocket.h \
+  defines.h main.h Utils.h ZNCString.h Template.h HTTPSock.h FileUtils.h \
+  User.h Buffer.h Nick.h znc.h

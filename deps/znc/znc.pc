@@ -1,0 +1,23 @@
+# You can access these with e.g. pkg-config --variable=moddir znc
+prefix=/usr/local
+exec_prefix=${prefix}
+datarootdir=${prefix}/share
+bindir=${exec_prefix}/bin
+datadir=${datarootdir}
+includedir=${prefix}/include
+
+cxx=g++
+CPPFLAGS=
+MODFLAGS=  -D_FORTIFY_SOURCE=2 -O2 -DHAVE_IPV6 -Wall -W -Wno-unused-parameter -Woverloaded-virtual -Wshadow -DCSOCK_USE_POLL -DHAVE_LSTAT -I/Users/syco/Programs/include   -DHAVE_LIBSSL -fPIC
+version=0.096
+moddir=${exec_prefix}/lib/znc
+moddatadir=${datarootdir}/znc
+modlink=-bundle -flat_namespace -undefined suppress
+
+INC_PATH=-I${includedir}/znc
+
+Name: ZNC
+Description: An advanced IRC proxy
+Version: ${version}
+URL: http://znc.in
+Cflags: ${CPPFLAGS} ${MODFLAGS} ${INC_PATH}

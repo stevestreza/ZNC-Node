@@ -1,0 +1,2 @@
+ZNCString.o: ZNCString.cpp ZNCString.h FileUtils.h Socket.h Csocket.h \
+  defines.h main.h Utils.h MD5.h SHA256.h

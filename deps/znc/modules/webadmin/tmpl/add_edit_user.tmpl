@@ -1,0 +1,284 @@
+<? INC Header.tmpl ?>
+
+<form action="<? IF Edit ?>edituser<? ELSE ?>adduser<? ENDIF ?>" method="post">
+	<? INC _csrf_check.tmpl ?>
+	<div class="section">
+		<input type="hidden" name="submitted" value="1" />
+
+		<h3>Authentication</h3>
+		<div class="sectionbg">
+			<div class="sectionbody">
+				<div class="subsection">
+					<div class="inputlabel">Username:</div>
+					<div>
+						<? IF Edit ?>
+						<input type="hidden" name="user" value="<? VAR Username ?>" />
+						<input type="text" name="newuser" value="<? VAR Username ?>" class="half" maxlength="128" disabled="disabled" />
+						<? ELSE ?>
+						<input type="text" name="user" value="<? VAR Username ?>" class="half" maxlength="128" />
+						<? ENDIF ?>
+					</div>
+				</div>
+				<div class="subsection">
+					<div class="inputlabel">Password:</div>
+					<div><input type="password" name="password" class="half" /></div>
+				</div>
+				<div class="subsection">
+					<div class="inputlabel">Confirm password:</div>
+					<div><input type="password" name="password2" class="half" /></div>
+				</div>
+				<div class="subsection half">
+					<div class="inputlabel">Allowed IPs:</div>
+					<div><textarea name="allowedips" cols="70" rows="5"><? LOOP AllowedHostLoop ?><? VAR Host ?>
+<? ENDLOOP ?>
+</textarea></div>
+					<br /><span class="info">Leave empty to allow connections from all IPs.<br />
+					Otherwise, one entry per line, wildcards * and ? are available.</span>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<h3>IRC Information</h3>
+		<? IF !Edit ?>
+		<span class="info">Nick, AltNick, Ident, RealName and QuitMsg can be left empty to use default values.</span>
+		<? ENDIF ?>
+		<div class="sectionbg">
+			<div class="sectionbody">
+				<div class="subsection">
+					<div class="inputlabel">Nickname:</div>
+					<div><input type="text" name="nick" value="<? VAR Nick ?>" class="half" maxlength="128" /></div>
+				</div>
+				<div class="subsection">
+					<div class="inputlabel">Alt. Nickname:</div>
+					<div><input type="text" name="altnick" value="<? VAR AltNick ?>" class="half" maxlength="128" /></div>
+				</div>
+				<div style="clear: both;"></div>
+				<div class="subsection">
+					<div class="inputlabel">Ident:</div>
+					<div><input type="text" name="ident" value="<? VAR Ident ?>" class="half" maxlength="128" /></div>
+				</div>
+				<div class="subsection">
+					<div class="inputlabel">StatusPrefix:</div>
+					<div><input type="text" name="statusprefix" value="<? VAR StatusPrefix ?>" class="half" maxlength="5" /></div>
+				</div>
+				<div style="clear: both;"></div>
+				<div class="subsection">
+					<div class="inputlabel">Realname:</div>
+					<div><input type="text" name="realname" value="<? VAR RealName ?>" class="full" maxlength="256" /></div>
+				</div>
+				<div style="clear: both;"></div>
+
+			<? IF BindHostLoop ?>
+				<div class="subsection">
+					<div class="inputlabel">BindHost:</div>
+					<select name="bindhost">
+						<option value="">- Default -</option>
+						<? LOOP BindHostLoop ?><option value="<? VAR BindHost ?>"<? IF Checked ?> selected="selected"<? ENDIF ?>><? VAR BindHost ?></option><? ENDLOOP ?>
+					</select>
+				</div>
+				<div style="clear: both;"></div>
+			<? ENDIF ?>
+
+				<div class="subsection">
+					<div class="inputlabel">Quit Message:</div>
+					<div><input type="text" name="quitmsg" value="<? VAR QuitMsg ?>" class="full" maxlength="256" /></div>
+				</div>
+				<div style="clear: both;"></div>
+
+				<div class="subsection half">
+					<div class="inputlabel">Servers:</div>
+					<div><textarea name="servers" cols="70" rows="5"><? LOOP ServerLoop ?><? VAR Server ?>
+<? ENDLOOP ?>
+</textarea></div>
+					<br /><span class="info">One server per line, host [[+]port] [password]</span>
+				</div>
+				<div style="clear: both;"></div>
+
+				<div class="subsection">
+					<div class="inputlabel">Active:</div>
+					<div class="checkbox"><input type="checkbox" name="doconnect" id="doconnect_checkbox"<? IF IRCConnectEnabled ?> checked="checked"<? ENDIF ?> />
+						<label for="doconnect_checkbox">Connect to IRC &amp; automatically re-connect</label></div>
+				</div>
+				<div style="clear: both;"></div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<h3>Modules</h3>
+		<div class="sectionbg">
+			<div class="sectionbody">
+				<table>
+					<thead>
+					<tr>
+						<td>Name</td>
+						<td>Arguments</td>
+						<td>Description</td>
+					</tr>
+					</thead>
+					<tbody>
+
+				<? LOOP ModuleLoop ?>
+					<tr class="<? IF __EVEN__ ?>evenrow<? ELSE ?>oddrow<? ENDIF ?>">
+						<td class="mod_name">
+							<input type="checkbox" name="loadmod" id="lm_<? VAR Name ?>" value="<? VAR Name ?>"<? IF Checked ?> checked="checked"<? ENDIF ?><? IF Disabled ?> disabled="disabled"<? ENDIF ?> /><label for="lm_<? VAR Name ?>"> <? VAR Name ?></label>
+						</td>
+						<td class="mod_args">
+							<? IF Disabled ?><? VAR Args ?><? ELSE ?><input class="third" type="text" name="modargs_<? VAR Name ?>" value="<? VAR Args ?>" /><? ENDIF ?>
+						</td>
+						<td class="mod_descr"><? VAR Description ?></td>
+					</tr>
+				<? ENDLOOP ?>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<h3>Channels</h3>
+		<? IF !Edit ?>
+		<span class="info">You will be able to add + modify channels here after you created the user.</span><br />
+		<? ELSE ?>
+		<div class="sectionbg">
+			<div class="sectionbody">
+				<table>
+					<thead>
+					<tr>
+						<td>[<a href="addchan?user=<? VAR Username ESC=URL ?>">Add</a>]</td>
+				<? IF ChannelLoop ?>
+						<td>Save</td>
+						<td>Name</td>
+						<td>CurModes</td>
+						<td>DefModes</td>
+						<td>BufferCount</td>
+						<td>Options</td>
+				<? ELSE ?>
+						<td>&nbsp;&nbsp;&lt;- Add a channel (opens in same page)&nbsp;&nbsp;</td>
+				<? ENDIF ?>
+					</tr>
+					</thead>
+
+					<tbody>
+			<? LOOP ChannelLoop SORTASC=Name ?>
+					<tr class="<? IF __EVEN__ ?>evenrow<? ELSE ?>oddrow<? ENDIF ?>">
+						<td>
+							<input type="hidden" name="channel" value="<? VAR Name ?>" />
+							[<a href="editchan?user=<? VAR Username ESC=URL ?>&amp;name=<? VAR Name ESC=URL ?>">Edit</a>] [<a href="delchan?user=<? VAR Username ESC=URL ?>&amp;name=<? VAR Name ESC=URL ?>">Del</a>]
+						</td>
+						<td><input type="checkbox" name="save_<? VAR Name ?>"<? IF InConfig ?> checked="checked"<? ENDIF ?> /></td>
+						<td><? VAR Name ?></td>
+						<td><? VAR CurModes ?></td>
+						<td><? VAR DefModes ?></td>
+						<td><? VAR BufferCount ?></td>
+						<td><? VAR Options ?></td>
+					</tr>
+			<? ENDLOOP ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<? ENDIF ?>
+	</div>
+
+	<div class="section">
+		<h3>Default Channel Settings</h3>
+		<div class="sectionbg">
+			<div class="sectionbody">
+				<div class="subsection third">
+					<div class="inputlabel">Modes:</div>
+					<div><input type="text" name="chanmodes" value="<? VAR DefaultChanModes ?>" maxlength="32" /></div>
+					<br /><span class="info">Empty = use standard value</span>
+				</div>
+				<div class="subsection third">
+					<div class="inputlabel">Buffer Size:</div>
+					<div><input type="text" name="bufsize" value="<? VAR BufferCount ?>" maxlength="9" /></div>
+					<br /><span class="info">Empty = use standard value</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<h3>Flags</h3>
+		<div class="sectionbg">
+			<div class="sectionbody lotsofcheckboxes">
+				<? LOOP OptionLoop ?>
+				<span class="checkboxandlabel">
+					<input type="checkbox" name="<? VAR Name ?>" id="opt_<? VAR Name ?>" value="1"<? IF Checked ?> checked="checked"<? ENDIF ?><? IF Disabled ?> disabled="disabled"<? ENDIF ?> />
+					<label for="opt_<? VAR Name ?>"><? VAR DisplayName ?></label>
+				</span>
+				<? ENDLOOP ?>
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<h3>ZNC Behavior</h3>
+		<span class="info">Any of the following text boxes can be left empty to use their default value.</span>
+		<div class="sectionbg">
+			<div class="sectionbody">
+				<div class="subsection">
+					<div class="inputlabel">Timestamp Format:</div>
+					<div><input type="text" name="timestampformat" value="<? VAR TimestampFormat ?>" class="half" /></div>
+				</div>
+				<div class="subsection">
+					<div class="inputlabel">Timezone Offset:</div>
+					<div><input type="text" name="timezoneoffset" value="<? VAR TimezoneOffset ?>" class="third" /></div>
+				</div>
+				<div class="subsection">
+					<div class="inputlabel">Join Tries:</div>
+					<div><input type="text" name="jointries" value="<? VAR JoinTries ?>" class="third" /></div>
+				</div>
+				<div class="subsection">
+					<div class="inputlabel">Max Joins:</div>
+					<div><input type="text" name="maxjoins" value="<? VAR MaxJoins ?>" class="third" /></div>
+				</div>
+				<div class="subsection half">
+					<div class="inputlabel">CTCP Replies:</div>
+					<div><textarea name="ctcpreplies" cols="70" rows="3"><? LOOP CTCPLoop ?><? VAR CTCP ?>
+<? ENDLOOP ?>
+</textarea></div>
+					<br /><span class="info">One reply per line. Example: TIME Buy a watch!</span>
+				</div>
+				<div class="subsection">
+					<div class="inputlabel">Skin:</div>
+					<div>
+						<? IF SkinLoop ROWS > 1 ?>
+						<select name="skin">
+							<option value="">- Global -</option>
+							<? LOOP SkinLoop ?>
+							<option value="<? VAR Name ?>"<? IF Checked ?> selected="selected"<? ENDIF ?>><? IF Name == "_default_" ?>Default<? ELSE ?><? VAR Name ?><? ENDIF ?></option>
+							<? ENDLOOP ?>
+						</select>
+						<? ELSE ?>
+						No other skins found
+						<? ENDIF ?>
+					</div>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+	</div>
+
+	<? LOOP EmbeddedModuleLoop ?>
+		<? IF Embed ?>
+		<div class="section">
+			<h3>Module <? VAR ModName ?></h3>
+			<? INC *Embed ?>
+		</div>
+		<? ENDIF ?>
+	<? ENDLOOP ?>
+
+	<div class="submitline">
+		<input type="submit" value="<? IF Edit ?>Save<? ELSE ?>Create<? ENDIF ?>" />
+	</div>
+</form>
+
+<? INC Footer.tmpl ?>
